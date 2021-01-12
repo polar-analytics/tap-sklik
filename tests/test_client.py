@@ -6,7 +6,7 @@ The Client initialization is tested in tests/test_sklik_client_tester_plugin.py
 """
 
 
-from tap_sklik.client import Client
+from tap_sklik.sklik.client import Client
 
 
 def test_client_call(client: Client):

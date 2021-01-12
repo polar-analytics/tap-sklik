@@ -1,4 +1,4 @@
-from tap_sklik.tap import discover, sync
+from tap_sklik.singer.tap import discover, sync
 from .settings import SKLIK_TEST_TOKEN
 
 
