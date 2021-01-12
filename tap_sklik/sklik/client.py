@@ -36,7 +36,8 @@ def _post_sklik(method: str, arguments: List[Any]) -> Dict[str, Any]:
     if response_data_status != 200:
         response_data_status_message = response_data.get("statusMessage", None)
         raise Exception(
-            f"API call {request_url} failed: status code {response_data_status} ({response_data_status_message})",
+            f"API call {request_url} failed: status code {response_data_status}"
+            + f"({response_data_status_message})",
             request_url,
             arguments,
             response_data,
