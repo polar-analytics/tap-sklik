@@ -1,6 +1,6 @@
-# sklik_el
+# tap-sklik
 
-A Python package to extract and load data from Sklik API
+A [Singer tap](https://www.singer.io/) to extract data from the [Sklik API](https://api.sklik.cz/).
 
 ## Install
 
@@ -22,6 +22,12 @@ then run
 tap-sklik -c sklik-config.json
 ```
 
+more help
+
+```bash
+tap-sklik -c sklik-config.json --help
+```
+
 ## Development
 
 ### Tools
@@ -37,7 +43,9 @@ It will create a `./.venv` virtual env that you can use for development.
 
 > Note: a standardized `.vscode` config is provided.
 
-### `.env`
+> Note: the project follows `black` codestyle, and lints with `flake8`
+
+### Environment variables
 
 Copy `.env.dev` to `.env` and fill any required field.
 
