@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "sklik_el"
+version = "0.1.0"
+description = "A simple tool to extract and load data from Sklik"
+authors = ["Guillaume Desforges <guillaume.desforges.pro@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.25.1"
+python-dotenv = "^0.15.0"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+pytest = "^6.2.1"
