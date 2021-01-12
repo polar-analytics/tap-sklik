@@ -6,8 +6,8 @@ import singer
 from singer import Catalog, CatalogEntry, Schema
 from singer.metadata import get_standard_metadata
 
-from tap_sklik.client import Client
-from tap_sklik.extract import extract_ad_campaigns
+from ..sklik.client import Client
+from ..sklik.extract import extract_ad_campaigns
 
 
 def load_schema(schema_name):

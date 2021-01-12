@@ -1,3 +1,3 @@
-from .cli import cli
+from .singer.cli import cli
 
 cli()

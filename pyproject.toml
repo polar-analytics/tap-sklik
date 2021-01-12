@@ -15,4 +15,4 @@ black = "^20.8b1"
 pytest = "^6.2.1"
 
 [tool.poetry.scripts]
-tap-sklik = 'tap_sklik.cli:cli'
+tap-sklik = 'tap_sklik.singer.cli:cli'
