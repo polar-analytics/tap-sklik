@@ -6,7 +6,7 @@ from .client import Client
 PAGINATED_CALL_LIMIT = 100
 
 
-def call_paginated(
+def _extract_paginated(
     client: Client,
     method: str,
     arguments: Dict[str, Any],
@@ -50,9 +50,9 @@ def call_paginated(
     return accumulated_campaigns
 
 
-def extract(client: Client):
-    # get campaigns' spend
-    campaign_spend_data = call_paginated(
+def extract_ad_campaigns(client: Client):
+    # get ad campaigns
+    return _extract_paginated(
         client,
         "campaigns.list",
         [
@@ -68,9 +68,6 @@ def extract(client: Client):
                     "createDate",
                     "endDate",
                     "defaultBudgetId",
-                    "budget.id",
-                    "budget.name",
-                    "budget.dayBudget",
                     "exhaustedTotalBudget",
                     "totalBudgetFrom",
                     "totalBudget",
@@ -78,4 +75,3 @@ def extract(client: Client):
             },
         ],
     )
-    return campaign_spend_data

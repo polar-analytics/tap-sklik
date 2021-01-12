@@ -1,13 +1,14 @@
 [tool.poetry]
-name = "sklik_el"
+name = "tap-sklik"
 version = "0.1.0"
-description = "A simple tool to extract and load data from Sklik"
+description = "A singer tap for Sklik"
 authors = ["Guillaume Desforges <guillaume.desforges.pro@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.25.1"
 python-dotenv = "^0.15.0"
+singer-python = "^5.9.1"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"

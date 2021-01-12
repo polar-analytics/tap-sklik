@@ -1,0 +1,38 @@
+{
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "status": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        },
+        "createDate": {
+            "type": "string"
+        },
+        "endDate": {
+            "type": "string"
+        },
+        "defaultBudgetId": {
+            "type": "string"
+        },
+        "exhaustedTotalBudget": {
+            "type": "string"
+        },
+        "totalBudgetFrom": {
+            "type": "string"
+        },
+        "totalBudget": {
+            "type": "string"
+        },
+        "updated_at": {
+            "format": "date-time",
+            "type": "string"
+        }
+    }
+}

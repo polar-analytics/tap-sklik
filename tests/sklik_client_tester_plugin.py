@@ -5,8 +5,9 @@ Tested in tests/test_sklik_client_tester_plugin.py
 """
 
 import pytest
-from sklik_el.client import Client
-from sklik_el.settings import SKLIK_TEST_TOKEN
+from tap_sklik.client import Client
+
+from .settings import SKLIK_TEST_TOKEN
 
 
 @pytest.fixture
