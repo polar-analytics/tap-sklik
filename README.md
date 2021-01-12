@@ -4,13 +4,23 @@ A Python package to extract and load data from Sklik API
 
 ## Install
 
-```
-pip install -e git+https://github.com/polar-analytics/sklik_el.git#egg=sklik_el
+```bash
+pip install -e git+https://github.com/polar-analytics/tap-sklik.git#egg=tap-sklik
 ```
 
 ## Use
 
+Create a `sklik-config.json` file
 
+```json
+{ "token": "yourskliktoken" }
+```
+
+then run
+
+```bash
+tap-sklik -c sklik-config.json
+```
 
 ## Development
 
