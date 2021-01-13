@@ -7,4 +7,8 @@ def test_discover():
 
 
 def test_sync():
-    sync({"token": SKLIK_TEST_TOKEN}, {}, discover())
+    sync(
+        {"token": SKLIK_TEST_TOKEN, "start_date": "20210112", "end_date": "20210112"},
+        {},
+        discover(),
+    )

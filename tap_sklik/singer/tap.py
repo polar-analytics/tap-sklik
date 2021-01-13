@@ -1,6 +1,8 @@
 import json
 import logging
 import os
+from datetime import datetime
+from tap_sklik.sklik.constants import SKLIK_API_DATETIME_FMT
 
 import singer
 from singer import Catalog, CatalogEntry, Schema
@@ -61,9 +63,9 @@ def discover():
     return Catalog(load_catalog_entries())
 
 
-def extract(client: Client, schema_id: str):
+def extract(client: Client, schema_id: str, start_date: datetime, end_date: datetime):
     if schema_id == "ad_campaigns":
-        return extract_ad_campaigns(client)
+        return extract_ad_campaigns(client, start_date, end_date)
     else:
         raise NotImplementedError()
 
@@ -72,6 +74,9 @@ def sync(config, state, catalog: Catalog):
     """ Sync data from tap source """
     # get Client
     token = config["token"]
+    start_date = datetime.strptime(config["start_date"], SKLIK_API_DATETIME_FMT)
+    end_date = datetime.strptime(config["end_date"], SKLIK_API_DATETIME_FMT)
+
     client = Client(token)
 
     # Loop over selected streams in catalog
@@ -79,7 +84,7 @@ def sync(config, state, catalog: Catalog):
         logging.info(f"Syncing stream {stream.tap_stream_id}")
 
         # Extract data
-        extracted_data = extract(client, stream.tap_stream_id)
+        extracted_data = extract(client, stream.tap_stream_id, start_date, end_date)
 
         # Push to singer
         singer.write_schema(

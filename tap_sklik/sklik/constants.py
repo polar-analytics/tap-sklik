@@ -1,0 +1,1 @@
+SKLIK_API_DATETIME_FMT = "%Y%m%d"

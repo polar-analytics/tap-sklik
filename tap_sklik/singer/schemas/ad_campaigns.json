@@ -1,37 +1,162 @@
 {
     "properties": {
+        "actualClicks": {
+            "type": "string"
+        },
+        "adSelection": {
+            "type": "string"
+        },
+        "automaticLocation": {
+            "type": "string"
+        },
+        "context": {
+            "type": "string"
+        },
+        "contextNetwork": {
+            "type": "string"
+        },
+        "createDate": {
+            "type": "string"
+        },
+        "deleted": {
+            "type": "string"
+        },
+        "deleteDate": {
+            "type": "string"
+        },
+        "defaultBudgetId": {
+            "type": "string"
+        },
+        "deviceDesktop": {
+            "type": "string"
+        },
+        "deviceTablet": {
+            "type": "string"
+        },
+        "deviceMobil": {
+            "type": "string"
+        },
+        "deviceOther": {
+            "type": "string"
+        },
+        "devicesPriceRatio": {
+            "type": "string"
+        },
+        "endDate": {
+            "type": "string"
+        },
+        "excludedSearchServices": {
+            "type": "string"
+        },
+        "excludedUrls": {
+            "type": "string"
+        },
+        "exhaustedTotalBudget": {
+            "type": "string"
+        },
+        "fulltext": {
+            "type": "string"
+        },
         "id": {
             "type": "string"
         },
         "name": {
             "type": "string"
         },
+        "paymentMethod": {
+            "type": "string"
+        },
+        "schedule": {
+            "type": "string"
+        },
+        "scheduleEnabled": {
+            "type": "string"
+        },
+        "startDate": {
+            "type": "string"
+        },
         "status": {
             "type": "string"
         },
-        "type": {
+        "totalClicks": {
             "type": "string"
         },
-        "createDate": {
-            "type": "string"
-        },
-        "endDate": {
-            "type": "string"
-        },
-        "defaultBudgetId": {
-            "type": "string"
-        },
-        "exhaustedTotalBudget": {
+        "totalClicksFrom": {
             "type": "string"
         },
         "totalBudgetFrom": {
             "type": "string"
         },
+        "type": {
+            "type": "string"
+        },
         "totalBudget": {
             "type": "string"
         },
-        "updated_at": {
-            "format": "date-time",
+        "videoFormat": {
+            "type": "string"
+        },
+        "avgCpc": {
+            "type": "string"
+        },
+        "avgPos": {
+            "type": "string"
+        },
+        "clickMoney": {
+            "type": "string"
+        },
+        "clicks": {
+            "type": "string"
+        },
+        "conversions": {
+            "type": "string"
+        },
+        "conversionValue": {
+            "type": "string"
+        },
+        "impressionMoney": {
+            "type": "string"
+        },
+        "impressions": {
+            "type": "string"
+        },
+        "totalMoney": {
+            "type": "string"
+        },
+        "transactions": {
+            "type": "string"
+        },
+        "missImpressions": {
+            "type": "string"
+        },
+        "underLowerThreshold": {
+            "type": "string"
+        },
+        "exhaustedBudget": {
+            "type": "string"
+        },
+        "stoppedBySchedule": {
+            "type": "string"
+        },
+        "underForestThreshold": {
+            "type": "string"
+        },
+        "exhaustedBudgetShare": {
+            "type": "string"
+        },
+        "ctr": {
+            "type": "string"
+        },
+        "pno": {
+            "type": "string"
+        },
+        "ish": {
+            "type": "string"
+        },
+        "ishContext": {
+            "type": "string"
+        },
+        "ishSum": {
             "type": "string"
         }
     }

@@ -1,9 +1,67 @@
+from tap_sklik.sklik.constants import SKLIK_API_DATETIME_FMT
 from typing import Any, Dict, List
 from copy import deepcopy
+from datetime import datetime
 
 from .client import Client
 
 PAGINATED_CALL_LIMIT = 100
+
+AD_CAMPAIGN_REPORT_COLUMNS = [
+    "actualClicks",
+    "adSelection",
+    "automaticLocation",
+    "avgCpc",
+    "avgPos",
+    "clickMoney",
+    "clicks",
+    "context",
+    "contextNetwork",
+    "conversionValue",
+    "conversions",
+    "createDate",
+    "ctr",
+    "defaultBudgetId",
+    "deleteDate",
+    "deleted",
+    "deviceDesktop",
+    "deviceMobil",
+    "deviceOther",
+    "deviceTablet",
+    "devicesPriceRatio",
+    "endDate",
+    "excludedSearchServices",
+    "excludedUrls",
+    "exhaustedBudget",
+    "exhaustedBudgetShare",
+    "exhaustedTotalBudget",
+    "fulltext",
+    "id",
+    "impressionMoney",
+    "impressions",
+    "ish",
+    "ishContext",
+    "ishSum",
+    "missImpressions",
+    "name",
+    "paymentMethod",
+    "pno",
+    "schedule",
+    "scheduleEnabled",
+    "startDate",
+    "status",
+    "stoppedBySchedule",
+    "totalBudget",
+    "totalBudgetFrom",
+    "totalClicks",
+    "totalClicksFrom",
+    "totalMoney",
+    "transactions",
+    "type",
+    "underForestThreshold",
+    "underLowerThreshold",
+    "videoFormat",
+]
 
 
 def _extract_paginated(
@@ -50,28 +108,29 @@ def _extract_paginated(
     return accumulated_campaigns
 
 
-def extract_ad_campaigns(client: Client):
-    # get ad campaigns
+def extract_ad_campaigns(client: Client, start_date: datetime, end_date: datetime):
+    """
+    Creates an ad campaigns report, then fetches that report
+    """
+    formatted_start_date = start_date.strftime(SKLIK_API_DATETIME_FMT)
+    formatted_end_date = end_date.strftime(SKLIK_API_DATETIME_FMT)
+    create_report_data = client.call(
+        "campaigns.createReport",
+        [{"dateFrom": formatted_start_date, "dateTo": formatted_end_date}],
+    )
+
+    if "reportId" not in create_report_data:
+        raise ValueError("Could not create a new report")
+    report_id = create_report_data["reportId"]
+
+    # fetch report
     return _extract_paginated(
         client,
-        "campaigns.list",
+        "campaigns.readReport",
         [
-            # restrictionFilter
-            {},
+            # reportId
+            report_id,
             # displayOptions
-            {
-                "displayColumns": [
-                    "id",
-                    "name",
-                    "status",
-                    "type",
-                    "createDate",
-                    "endDate",
-                    "defaultBudgetId",
-                    "exhaustedTotalBudget",
-                    "totalBudgetFrom",
-                    "totalBudget",
-                ]
-            },
+            {"displayColumns": AD_CAMPAIGN_REPORT_COLUMNS},
         ],
     )

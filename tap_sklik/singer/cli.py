@@ -2,7 +2,7 @@ import singer
 from singer import utils
 from .tap import discover, sync
 
-REQUIRED_CONFIG_KEYS = ["token"]
+REQUIRED_CONFIG_KEYS = ["token", "start_date", "end_date"]
 LOGGER = singer.get_logger()
 
 
