@@ -13,7 +13,7 @@ pip install -e git+https://github.com/polar-analytics/tap-sklik.git#egg=tap-skli
 Create a `sklik-config.json` file
 
 ```json
-{ "token": "yourskliktoken" }
+{ "token": "yourskliktoken", "start_date": "YYYYmmdd", "end_date": "YYYYmmdd" }
 ```
 
 then run
