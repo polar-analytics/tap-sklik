@@ -26,3 +26,10 @@ jobs:
       - name: Test with pytest
         run: poetry run pytest
         env: { SKLIK_TEST_TOKEN: "${{ secrets.SKLIK_TEST_TOKEN }}" }
+      - name: Build tarball
+        run: poetry build
+      - name: Archive tarball
+        uses: actions/upload-artifact@v2
+        with:
+          name: tap-sklik
+          path: dist/tap-sklik-*.tar.gz
