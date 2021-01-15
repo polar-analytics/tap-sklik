@@ -17,3 +17,7 @@ flake8 = "^3.8.4"
 
 [tool.poetry.scripts]
 tap-sklik = 'tap_sklik.singer.cli:cli'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
