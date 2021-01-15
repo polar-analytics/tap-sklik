@@ -30,7 +30,7 @@ jobs:
         run: poetry build
       # see https://github.com/actions/upload-artifact#zipped-artifact-downloads
       - name: Untar package
-        run: cd dist && tar -tvf *.tar.gz
+        run: cd dist && tar -xvf *.tar.gz
       - name: Archive tarball
         uses: actions/upload-artifact@v2
         with:
