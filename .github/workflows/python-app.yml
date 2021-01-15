@@ -26,3 +26,13 @@ jobs:
       - name: Test with pytest
         run: poetry run pytest
         env: { SKLIK_TEST_TOKEN: "${{ secrets.SKLIK_TEST_TOKEN }}" }
+      - name: Build tarball
+        run: poetry build
+      # see https://github.com/actions/upload-artifact#zipped-artifact-downloads
+      - name: Untar package
+        run: cd dist && tar -xvf *.tar.gz
+      - name: Archive tarball
+        uses: actions/upload-artifact@v2
+        with:
+          name: tap-sklik
+          path: dist/tap-sklik-*/*
