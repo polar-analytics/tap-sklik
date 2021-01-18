@@ -68,6 +68,7 @@ def _extract_paginated(
     client: Client,
     method: str,
     arguments: Dict[str, Any],
+    response_data_list_key: str,
     limit: int = PAGINATED_CALL_LIMIT,
 ) -> List[Dict[str, Any]]:
     # set to False when the API calls gets 0 results (because out of pagination bounds)
@@ -92,16 +93,13 @@ def _extract_paginated(
 
         # get data
         data = client.call(method, arguments_with_pagination)
-        campaigns = data.get("campaigns", [])
-
+        campaigns = data.get(response_data_list_key, [])
         # stop if empty data
         if len(campaigns) == 0:
             non_empty_response = False
             continue
-
         # store result
         accumulated_campaigns.extend(campaigns)
-
         # increment offset
         offset += limit
 
@@ -133,4 +131,5 @@ def extract_ad_campaigns(client: Client, start_date: datetime, end_date: datetim
             # displayOptions
             {"displayColumns": AD_CAMPAIGN_REPORT_COLUMNS},
         ],
+        response_data_list_key="report",
     )
