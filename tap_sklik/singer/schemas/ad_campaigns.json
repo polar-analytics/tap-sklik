@@ -1,163 +1,332 @@
 {
     "properties": {
         "actualClicks": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "adSelection": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ]
         },
         "automaticLocation": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "context": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "contextNetwork": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ]
         },
         "createDate": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
         },
         "deleted": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "deleteDate": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
         },
         "defaultBudgetId": {
-            "type": "string"
+            "type": [
+                "null",
+                "integer"
+            ]
         },
         "deviceDesktop": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "deviceTablet": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "deviceMobil": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "deviceOther": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "devicesPriceRatio": {
-            "type": "string"
+            "type": [
+                "null",
+                "object"
+            ]
         },
         "endDate": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
         },
         "excludedSearchServices": {
-            "type": "string"
+            "type": [
+                "null",
+                "array"
+            ]
         },
         "excludedUrls": {
-            "type": "string"
+            "type": [
+                "null",
+                "array"
+            ],
+            "items": {
+                "type": "string"
+            }
         },
         "exhaustedTotalBudget": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "fulltext": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "id": {
-            "type": "string"
+            "type": [
+                "null",
+                "integer"
+            ]
         },
         "name": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ]
         },
         "paymentMethod": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ]
         },
         "schedule": {
-            "type": "string"
+            "type": [
+                "null",
+                "object",
+                "array"
+            ]
         },
         "scheduleEnabled": {
-            "type": "string"
+            "type": [
+                "null",
+                "boolean"
+            ]
         },
         "startDate": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
         },
         "status": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ]
         },
         "totalClicks": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "totalClicksFrom": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
         },
         "totalBudgetFrom": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
         },
         "type": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ]
         },
         "totalBudget": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "videoFormat": {
-            "type": "string"
+            "type": [
+                "null",
+                "string"
+            ]
         },
         "avgCpc": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "avgPos": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "clickMoney": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "clicks": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "conversions": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "conversionValue": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "impressionMoney": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "impressions": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "totalMoney": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "transactions": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "missImpressions": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "underLowerThreshold": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "exhaustedBudget": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "stoppedBySchedule": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "underForestThreshold": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "exhaustedBudgetShare": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "ctr": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "pno": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "ish": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "ishContext": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         },
         "ishSum": {
-            "type": "string"
+            "type": [
+                "null",
+                "number"
+            ]
         }
     }
 }
