@@ -78,7 +78,7 @@ def _extract_paginated(
 
     # returned value
     # extend this list at each successful API call
-    accumulated_campaigns = []
+    accumulated_records = []
 
     # iterate while there are results in the pagination
     while non_empty_response:
@@ -93,17 +93,17 @@ def _extract_paginated(
 
         # get data
         data = client.call(method, arguments_with_pagination)
-        campaigns = data.get(response_data_list_key, [])
+        records = data.get(response_data_list_key, [])
         # stop if empty data
-        if len(campaigns) == 0:
+        if len(records) == 0:
             non_empty_response = False
             continue
         # store result
-        accumulated_campaigns.extend(campaigns)
+        accumulated_records.extend(records)
         # increment offset
         offset += limit
 
-    return accumulated_campaigns
+    return accumulated_records
 
 
 def extract_ad_campaigns(client: Client, start_date: datetime, end_date: datetime):
@@ -122,7 +122,7 @@ def extract_ad_campaigns(client: Client, start_date: datetime, end_date: datetim
     report_id = create_report_data["reportId"]
 
     # fetch report
-    return _extract_paginated(
+    campaigns = _extract_paginated(
         client,
         "campaigns.readReport",
         [
@@ -133,3 +133,11 @@ def extract_ad_campaigns(client: Client, start_date: datetime, end_date: datetim
         ],
         response_data_list_key="report",
     )
+
+    # campaigns.stats is an array, flatten by duplication
+    return [
+        # merge
+        dict(**record, **recordStat)
+        for record in campaigns
+        for recordStat in record.get("stats", [])
+    ]
