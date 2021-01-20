@@ -32,35 +32,41 @@ def get_metadata(*args, **kwargs):
     return metadatas
 
 
-def load_catalog_entries():
+def load_catalog_entries(stat_granularity: str = None):
+    # ad_campaigns metadata fields
     ad_campaigns_stream_name = "ad_campaigns"
     ad_campaigns_schema = load_schema("ad_campaigns")
+
     ad_campaigns_key_properties = ["id"]
+    if stat_granularity is not None and stat_granularity != "total":
+        ad_campaigns_key_properties.append("date")
 
-    return [
-        CatalogEntry(
-            tap_stream_id="ad_campaigns",
-            stream=ad_campaigns_stream_name,
-            schema=ad_campaigns_schema,
+    ad_campaigns_catalog_entry = CatalogEntry(
+        tap_stream_id="ad_campaigns",
+        stream=ad_campaigns_stream_name,
+        schema=ad_campaigns_schema,
+        key_properties=ad_campaigns_key_properties,
+        metadata=get_metadata(
+            schema=ad_campaigns_schema.to_dict(),
+            schema_name=ad_campaigns_stream_name,
             key_properties=ad_campaigns_key_properties,
-            metadata=get_metadata(
-                schema=ad_campaigns_schema.to_dict(),
-                schema_name=ad_campaigns_stream_name,
-                key_properties=ad_campaigns_key_properties,
-            ),
-            replication_key=None,
-            is_view=None,
-            database=None,
-            table=None,
-            row_count=None,
-            stream_alias=None,
-            replication_method=None,
-        )
-    ]
+        ),
+        replication_key=ad_campaigns_key_properties,
+        is_view=None,
+        database=None,
+        table=None,
+        row_count=None,
+        stream_alias=None,
+        replication_method=None,
+    )
+
+    # return all catalog entries
+    return [ad_campaigns_catalog_entry]
 
 
-def discover():
-    return Catalog(load_catalog_entries())
+def discover(stat_granularity: str = None):
+    catalog_entries = load_catalog_entries(stat_granularity=stat_granularity)
+    return Catalog(catalog_entries)
 
 
 def extract(
