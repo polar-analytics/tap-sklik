@@ -2,8 +2,8 @@ import json
 import logging
 import os
 from datetime import datetime
+from tap_sklik.singer.config import get_parsed_configs
 from typing import List
-from tap_sklik.sklik.constants import SKLIK_API_DATETIME_FMT
 
 import singer
 from singer import Catalog, CatalogEntry, Schema
@@ -65,8 +65,12 @@ def load_catalog_entries(stat_granularity: str = None) -> List[CatalogEntry]:
     return [ad_campaigns_catalog_entry]
 
 
-def discover(stat_granularity: str = None):
-    catalog_entries = load_catalog_entries(stat_granularity=stat_granularity)
+def discover(config):
+    # get config
+    parsed_configs = get_parsed_configs(config)
+    catalog_entries = load_catalog_entries(
+        stat_granularity=parsed_configs.stat_granularity
+    )
     return Catalog(catalog_entries)
 
 
@@ -75,18 +79,14 @@ def extract(
     schema_id: str,
     start_date: datetime,
     end_date: datetime,
-    stat_granularity=None,
-    include_current_day_stats=None,
+    stat_granularity: str,
+    include_current_day_stats: bool,
 ):
     if schema_id == "ad_campaigns":
-        # pass optional kwargs if defined
-        optionalKwargs = {}
-        if stat_granularity is not None:
-            optionalKwargs["stat_granularity"] = stat_granularity
-        if include_current_day_stats is not None:
-            optionalKwargs["include_current_day_stats"] = include_current_day_stats
         # do API call
-        return extract_ad_campaigns(client, start_date, end_date, **optionalKwargs)
+        return extract_ad_campaigns(
+            client, start_date, end_date, stat_granularity, include_current_day_stats
+        )
     else:
         raise NotImplementedError()
 
@@ -95,12 +95,9 @@ def sync(config, state, catalog: Catalog):
     """ Sync data from tap source """
     # get required config
     token = config["token"]
-    start_date = datetime.strptime(config["start_date"], SKLIK_API_DATETIME_FMT)
-    end_date = datetime.strptime(config["end_date"], SKLIK_API_DATETIME_FMT)
 
-    # get optional config
-    stat_granularity = config.get("stat_granularity", None)
-    include_current_day_stats = config.get("include_current_day_stats", None)
+    # get config
+    parsed_configs = get_parsed_configs(config)
 
     client = Client(token)
 
@@ -112,10 +109,10 @@ def sync(config, state, catalog: Catalog):
         extracted_data = extract(
             client,
             stream.tap_stream_id,
-            start_date,
-            end_date,
-            stat_granularity=stat_granularity,
-            include_current_day_stats=include_current_day_stats,
+            parsed_configs.start_date,
+            parsed_configs.end_date,
+            parsed_configs.stat_granularity,
+            parsed_configs.include_current_day_stats,
         )
 
         # Push to singer

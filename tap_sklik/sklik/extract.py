@@ -111,8 +111,8 @@ def extract_ad_campaigns(
     client: Client,
     start_date: datetime,
     end_date: datetime,
-    stat_granularity="daily",
-    include_current_day_stats="auto",
+    stat_granularity: str,
+    include_current_day_stats: bool,
 ):
     """
     Creates an ad campaigns report, then fetches that report
@@ -121,15 +121,6 @@ def extract_ad_campaigns(
     """
     start_date_start_of_day = as_start_of_day(start_date)
     end_date_end_of_day = as_end_of_day(end_date)
-
-    if include_current_day_stats == "auto":
-        today = datetime.now()
-        include_current_day_stats = (
-            # granularity is daily
-            stat_granularity == "daily"
-            # and today's date is in queried range
-            and (start_date_start_of_day <= today <= end_date_end_of_day)
-        )
 
     if include_current_day_stats and stat_granularity not in ["total", "daily"]:
         raise ValueError(
@@ -140,16 +131,19 @@ def extract_ad_campaigns(
     formatted_start_date = start_date_start_of_day.strftime(SKLIK_API_DATETIME_FMT)
     formatted_end_date = end_date_end_of_day.strftime(SKLIK_API_DATETIME_FMT)
 
+    create_report_display_options = {"statGranularity": stat_granularity}
+    if include_current_day_stats is not None:
+        create_report_display_options[
+            "includeCurrentDayStats"
+        ] = include_current_day_stats
+
     create_report_data = client.call(
         "campaigns.createReport",
         [
             # restrictionFilter
             {"dateFrom": formatted_start_date, "dateTo": formatted_end_date},
             # displayOptions
-            {
-                "includeCurrentDayStats": include_current_day_stats,
-                "statGranularity": stat_granularity,
-            },
+            create_report_display_options,
         ],
     )
 
