@@ -131,6 +131,12 @@ def extract_ad_campaigns(
             and (start_date_start_of_day <= today <= end_date_end_of_day)
         )
 
+    if include_current_day_stats and stat_granularity not in ["total", "daily"]:
+        raise ValueError(
+            "include_current_day_stats can be set to True only when stat_granularity "
+            + "is either 'total' or 'daily'"
+        )
+
     formatted_start_date = start_date_start_of_day.strftime(SKLIK_API_DATETIME_FMT)
     formatted_end_date = end_date_end_of_day.strftime(SKLIK_API_DATETIME_FMT)
 

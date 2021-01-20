@@ -63,19 +63,37 @@ def discover():
     return Catalog(load_catalog_entries())
 
 
-def extract(client: Client, schema_id: str, start_date: datetime, end_date: datetime):
+def extract(
+    client: Client,
+    schema_id: str,
+    start_date: datetime,
+    end_date: datetime,
+    stat_granularity=None,
+    include_current_day_stats=None,
+):
     if schema_id == "ad_campaigns":
-        return extract_ad_campaigns(client, start_date, end_date)
+        # pass optional kwargs if defined
+        optionalKwargs = {}
+        if stat_granularity is not None:
+            optionalKwargs["stat_granularity"] = stat_granularity
+        if include_current_day_stats is not None:
+            optionalKwargs["include_current_day_stats"] = include_current_day_stats
+        # do API call
+        return extract_ad_campaigns(client, start_date, end_date, **optionalKwargs)
     else:
         raise NotImplementedError()
 
 
 def sync(config, state, catalog: Catalog):
     """ Sync data from tap source """
-    # get Client
+    # get required config
     token = config["token"]
     start_date = datetime.strptime(config["start_date"], SKLIK_API_DATETIME_FMT)
     end_date = datetime.strptime(config["end_date"], SKLIK_API_DATETIME_FMT)
+
+    # get optional config
+    stat_granularity = config.get("stat_granularity", None)
+    include_current_day_stats = config.get("include_current_day_stats", None)
 
     client = Client(token)
 
@@ -84,7 +102,14 @@ def sync(config, state, catalog: Catalog):
         logging.info(f"Syncing stream {stream.tap_stream_id}")
 
         # Extract data
-        extracted_data = extract(client, stream.tap_stream_id, start_date, end_date)
+        extracted_data = extract(
+            client,
+            stream.tap_stream_id,
+            start_date,
+            end_date,
+            stat_granularity=stat_granularity,
+            include_current_day_stats=include_current_day_stats,
+        )
 
         # Push to singer
         singer.write_schema(
