@@ -1,3 +1,4 @@
+from tap_sklik.sklik.dateutils import as_end_of_day, as_start_of_day
 from tap_sklik.sklik.constants import SKLIK_API_DATETIME_FMT
 from typing import Any, Dict, List
 from copy import deepcopy
@@ -106,15 +107,44 @@ def _extract_paginated(
     return accumulated_records
 
 
-def extract_ad_campaigns(client: Client, start_date: datetime, end_date: datetime):
+def extract_ad_campaigns(
+    client: Client,
+    start_date: datetime,
+    end_date: datetime,
+    stat_granularity="daily",
+    include_current_day_stats="auto",
+):
     """
     Creates an ad campaigns report, then fetches that report
+
+    `stat_granularity` is one of `['total', 'daily', 'monthly', 'quarterly', 'yearly']`
     """
-    formatted_start_date = start_date.strftime(SKLIK_API_DATETIME_FMT)
-    formatted_end_date = end_date.strftime(SKLIK_API_DATETIME_FMT)
+    start_date_start_of_day = as_start_of_day(start_date)
+    end_date_end_of_day = as_end_of_day(end_date)
+
+    if include_current_day_stats == "auto":
+        today = datetime.now()
+        include_current_day_stats = (
+            # granularity is daily
+            stat_granularity == "daily"
+            # and today's date is in queried range
+            and (start_date_start_of_day <= today <= end_date_end_of_day)
+        )
+
+    formatted_start_date = start_date_start_of_day.strftime(SKLIK_API_DATETIME_FMT)
+    formatted_end_date = end_date_end_of_day.strftime(SKLIK_API_DATETIME_FMT)
+
     create_report_data = client.call(
         "campaigns.createReport",
-        [{"dateFrom": formatted_start_date, "dateTo": formatted_end_date}],
+        [
+            # restrictionFilter
+            {"dateFrom": formatted_start_date, "dateTo": formatted_end_date},
+            # displayOptions
+            {
+                "includeCurrentDayStats": include_current_day_stats,
+                "statGranularity": stat_granularity,
+            },
+        ],
     )
 
     if "reportId" not in create_report_data:
