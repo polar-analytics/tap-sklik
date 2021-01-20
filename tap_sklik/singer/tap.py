@@ -2,6 +2,7 @@ import json
 import logging
 import os
 from datetime import datetime
+from typing import List
 from tap_sklik.sklik.constants import SKLIK_API_DATETIME_FMT
 
 import singer
@@ -32,7 +33,7 @@ def get_metadata(*args, **kwargs):
     return metadatas
 
 
-def load_catalog_entries(stat_granularity: str = None):
+def load_catalog_entries(stat_granularity: str = None) -> List[CatalogEntry]:
     # ad_campaigns metadata fields
     ad_campaigns_stream_name = "ad_campaigns"
     ad_campaigns_schema = load_schema("ad_campaigns")
@@ -123,7 +124,7 @@ def sync(config, state, catalog: Catalog):
         )
         bookmark_column = stream.replication_key
         is_sorted = True  # TODO is it ?
-        max_bookmark = None
+        # max_bookmark = None
         for row in extracted_data:
             # TODO: place type conversions or transformations here
 
@@ -132,9 +133,14 @@ def sync(config, state, catalog: Catalog):
             if bookmark_column:
                 if is_sorted:
                     # update bookmark to latest value
-                    singer.write_state({stream.tap_stream_id: row[bookmark_column]})
+                    singer.write_state(
+                        {stream.tap_stream_id: [row[key] for key in bookmark_column]}
+                    )
                 else:
                     # if data unsorted, save max value until end of writes
-                    max_bookmark = max(max_bookmark, row[bookmark_column])
+                    raise NotImplementedError(
+                        "Unsorted data source is not yet supported"
+                    )
         if bookmark_column and not is_sorted:
-            singer.write_state({stream.tap_stream_id: max_bookmark})
+            # singer.write_state({stream.tap_stream_id: max_bookmark})
+            raise NotImplementedError("Unsorted data source is not yet supported")
