@@ -1,8 +1,9 @@
-from tap_sklik.sklik.dateutils import as_end_of_day, as_start_of_day
-from tap_sklik.sklik.constants import SKLIK_API_DATETIME_FMT
-from typing import Any, Dict, List
 from copy import deepcopy
 from datetime import datetime
+from typing import Any, Dict, List
+
+from tap_sklik.sklik.constants import SKLIK_API_DATETIME_FMT
+from tap_sklik.sklik.dateutils import as_end_of_day, as_start_of_day
 
 from .client import Client
 
@@ -165,9 +166,18 @@ def extract_ad_campaigns(
     )
 
     # campaigns.stats is an array, flatten by duplication
-    return [
+    campaigns = [
         # merge
         dict(**record, **recordStat)
         for record in campaigns
         for recordStat in record.get("stats", [])
     ]
+
+    for record in campaigns:
+        # remove nested .stats
+        del record["stats"]
+        # convert ".date" to string if present
+        if "date" in record:
+            record["date"] = str(record["date"])
+
+    return campaigns
