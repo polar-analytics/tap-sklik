@@ -1,3 +1,4 @@
+import logging
 from tap_sklik.sklik.dateutils import as_end_of_day, as_start_of_day
 from tap_sklik.sklik.constants import SKLIK_API_DATETIME_FMT
 from datetime import datetime
@@ -28,6 +29,7 @@ def get_parsed_configs(config) -> ParsedConfig:
             and (start_date_start_of_day <= today <= end_date_end_of_day)
         ):
             include_current_day_stats = True
+            logging.info("Automatically set include_current_day_stats to True")
 
     return ParsedConfig(
         start_date=start_date,
