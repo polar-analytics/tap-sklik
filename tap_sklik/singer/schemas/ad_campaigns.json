@@ -63,30 +63,6 @@
                 "integer"
             ]
         },
-        "deviceDesktop": {
-            "type": [
-                "null",
-                "boolean"
-            ]
-        },
-        "deviceTablet": {
-            "type": [
-                "null",
-                "boolean"
-            ]
-        },
-        "deviceMobil": {
-            "type": [
-                "null",
-                "boolean"
-            ]
-        },
-        "deviceOther": {
-            "type": [
-                "null",
-                "boolean"
-            ]
-        },
         "devicesPriceRatio": {
             "type": [
                 "null",
